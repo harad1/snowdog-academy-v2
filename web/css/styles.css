@@ -109,3 +109,7 @@ footer p {
 .padded {
     padding: 15px;
 }
+
+#input-login, #input-password {
+    width: 75%;
+}

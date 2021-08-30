@@ -22,12 +22,33 @@ class UserCryptocurrencyManager
         return $query->fetchAll(Database::FETCH_CLASS, UserCryptocurrency::class);
     }
 
-    public function addCryptocurrencyToUser(int $userId, Cryptocurrency $cryptocurrency, int $amount): void
+    public function addCryptocurrencyToUser(int $userId, string $cryptocurrencyId, int $amount): void
     {
-        // TODO
+        if($this->getUserCryptocurrency($userId, $cryptocurrencyId)){
+            $query = $this->database->prepare(
+                'UPDATE user_cryptocurrencies 
+                SET amount = amount + :amount 
+                WHERE user_id = :user_id 
+                AND cryptocurrency_id = :cryptocurrency_id');
+
+            $query->bindParam(':user_id', $userId, Database::PARAM_INT);
+            $query->bindParam(':cryptocurrency_id', $cryptocurrencyId, Database::PARAM_STR);
+            $query->bindParam(':amount', $amount, Database::PARAM_INT);
+            $query->execute();
+
+        } else {
+            $query = $this->database->prepare(
+                'INSERT INTO user_cryptocurrencies (user_id, cryptocurrency_id, amount) 
+                VALUES (:user_id, :cryptocurrency_id, :amount)');
+                
+            $query->bindParam(':user_id', $userId, Database::PARAM_INT);
+            $query->bindParam(':cryptocurrency_id', $cryptocurrencyId, Database::PARAM_STR);
+            $query->bindParam(':amount', $amount, Database::PARAM_INT);
+            $query->execute();
+        }
     }
 
-    public function subtractCryptocurrencyFromUser(int $userId, Cryptocurrency $cryptocurrency, int $amount): void
+    public function subtractCryptocurrencyFromUser(int $userId, string $cryptocurrencyId, int $amount): void
     {
         // TODO
     }
@@ -43,5 +64,13 @@ class UserCryptocurrencyManager
         $result = $query->fetchObject(UserCryptocurrency::class);
 
         return $result ?: null;
+    }
+
+    public function subtractFoundsFromUser(int $userId, float $cost): void
+    {
+        $query = $this->database->prepare('UPDATE users SET funds = funds - :cost WHERE id = :user_id');
+        $query->bindParam(':user_id', $userId, Database::PARAM_INT);
+        $query->bindParam(':cost', $cost);
+        $query->execute();
     }
 }

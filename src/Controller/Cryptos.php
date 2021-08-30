@@ -44,15 +44,41 @@ class Cryptos
         }
 
         $this->cryptocurrency = $cryptocurrency;
+
         require __DIR__ . '/../view/cryptos/buy.phtml';
     }
 
     public function buyPost(string $id): void
     {
-        // TODO
-        // verify if user is logged in
-        // use $this->userCryptocurrencyManager->addCryptocurrencyToUser() method
+        $user = $this->userManager->getByLogin((string) $_SESSION['login']);
+        
+        if (!$user) {
+            header('Location: /cryptos');
+            return;
+        }
 
+        $cryptocurrency = $this->cryptocurrencyManager->getCryptocurrencyById($id);
+        
+        if (!$cryptocurrency) {
+            header('Location: /cryptos');
+            return;
+        }
+        
+        $userId = $user->getId();
+        $userFunds = $user->getFunds();
+
+        $amount = $_POST['amount'];
+        $cryptocurrencyPrice = $cryptocurrency->getPrice();
+        $totalCost = $amount * $cryptocurrencyPrice;
+        $missingAmount = $totalCost - $userFunds;
+
+        if ($totalCost > $userFunds){
+            $_SESSION['flash'] = "Unfortunately, you do not have enough funds. This transaction requires $$totalCost and you have got $$userFunds. You require a balance of $$missingAmount to complete this transaction.";
+        } else {
+            $this->userCryptocurrencyManager->addCryptocurrencyToUser($userId,  $id, (int)$amount);
+            $this->userCryptocurrencyManager->subtractFoundsFromUser($userId,  $totalCost);
+            $_SESSION['flash'] = "You have purchased $amount of $id. Total cost: $$totalCost. Funds left: $$userFunds.";
+        }
         header('Location: /cryptos');
     }
 
@@ -71,6 +97,7 @@ class Cryptos
         }
 
         $this->cryptocurrency = $cryptocurrency;
+
         require __DIR__ . '/../view/cryptos/sell.phtml';
     }
 
@@ -79,8 +106,6 @@ class Cryptos
         // TODO
         // verify if user is logged in
         // use $this->userCryptocurrencyManager->subtractCryptocurrencyFromUser() method
-
-        header('Location: /cryptos');
     }
 
     public function getCryptocurrencies(): array

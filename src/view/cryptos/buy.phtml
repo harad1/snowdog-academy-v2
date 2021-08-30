@@ -1,17 +1,15 @@
-<?php
+<?php require_once(__DIR__ . '/../common/header.phtml'); ?>
 
-require_once(__DIR__ . '/../common/header.phtml'); ?>
-
-<div class="container">
-    <section id="buy-form" class="padded">
-        <h3>Buy <?= $this->cryptocurrency->getName() ?> (<?= $this->cryptocurrency->getSymbol() ?>)</h3>
-        <form method="post" action="/cryptos/buy/<?= $this->cryptocurrency->getId() ?>">
-            <div class="form-group">
-                <input type="text" class="form-control" id="amount" placeholder="Amount" name="amount">
-            </div>
-            <button type="submit" class="btn btn-success">Buy</button>
-        </form>
-    </section>
-</div>
+    <div class="container">
+        <section id="buy-form" class="padded">
+            <h3>Buy <?= $this->cryptocurrency->getName() ?> (<?= $this->cryptocurrency->getSymbol()?>) — current price: $<?= $this->cryptocurrency->getPrice()?></h3>
+            <form method="post" action="/cryptos/buyPost/<?= $this->cryptocurrency->getId() ?>">
+                <div class="form-group">
+                    <input type="number" step="0.01" min="0.01" class="form-control" id="amount" placeholder="Amount in <?= $this->cryptocurrency->getSymbol()?>" name="amount" required>
+                </div>
+                <button type="submit" class="btn btn-success">Buy</button>
+            </form>
+        </section>
+    </div>
 
 <?php require_once(__DIR__ . '/../common/footer.phtml'); ?>
