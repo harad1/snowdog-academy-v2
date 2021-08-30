@@ -69,15 +69,17 @@ class Cryptos
 
         $amount = $_POST['amount'];
         $cryptocurrencyPrice = $cryptocurrency->getPrice();
+        $cryptocurrencyName = $cryptocurrency->getName();
+        $cryptocurrencySymbol = $cryptocurrency->getSymbol();
         $totalCost = $amount * $cryptocurrencyPrice;
         $missingAmount = $totalCost - $userFunds;
 
         if ($totalCost > $userFunds){
-            $_SESSION['flash'] = "Unfortunately, you do not have enough funds. This transaction requires $$totalCost and you have got $$userFunds. You require a balance of $$missingAmount to complete this transaction.";
+            $_SESSION['flash'] = "Unfortunately, you do not have enough funds. This transaction requires $$totalCost and you have got $$userFunds. You require an extra $$missingAmount to complete this transaction.";
         } else {
             $this->userCryptocurrencyManager->addCryptocurrencyToUser($userId,  $id, (int)$amount);
-            $this->userCryptocurrencyManager->subtractFoundsFromUser($userId,  $totalCost);
-            $_SESSION['flash'] = "You have purchased $amount of $id. Total cost: $$totalCost. Funds left: $$userFunds.";
+            $this->userCryptocurrencyManager->subtractFundsFromUser($userId,  $totalCost);
+            $_SESSION['flash'] = "You have purchased $amount of $cryptocurrencyName ($cryptocurrencySymbol). Total cost: $$totalCost.";
         }
         header('Location: /cryptos');
     }
@@ -103,9 +105,42 @@ class Cryptos
 
     public function sellPost(string $id): void
     {
-        // TODO
-        // verify if user is logged in
-        // use $this->userCryptocurrencyManager->subtractCryptocurrencyFromUser() method
+        $user = $this->userManager->getByLogin((string) $_SESSION['login']);
+        if (!$user) {
+            header('Location: /account');
+            return;
+        }
+
+        $cryptocurrency = $this->cryptocurrencyManager->getCryptocurrencyById($id);
+        if (!$cryptocurrency) {
+            header('Location: /account');
+            return;
+        }
+
+        $userId = $user->getId();
+
+        $amount = $_POST['amount'];
+        $cryptocurrencyPrice = $cryptocurrency->getPrice();
+        $cryptocurrencyName = $cryptocurrency->getName();
+        $cryptocurrencySymbol = $cryptocurrency->getSymbol();
+        $totalCost = $amount * $cryptocurrencyPrice;
+
+        $userCryptocurrencyAmount = $this->userCryptocurrencyManager->getUserCryptocurrency($userId, $id);
+        if (!$userCryptocurrencyAmount) {
+            header('Location: /account');
+            return;
+        }
+
+        if ($amount > $userCryptocurrencyAmount->getAmount()){
+            $_SESSION['flash'] = "You do not have this much of $cryptocurrencyName ($cryptocurrencySymbol).";
+        } else {
+            $this->userCryptocurrencyManager->subtractCryptocurrencyFromUser($userId,  $id, (int)$amount);
+            $this->userCryptocurrencyManager->addFundsFromUser($userId,  $totalCost);
+            $this->userCryptocurrencyManager->removeEmptyCryptoBalance($userId);
+            $_SESSION['flash'] = "You have sold $amount of $cryptocurrencyName ($cryptocurrencySymbol).";
+        }
+
+        header('Location: /account');
     }
 
     public function getCryptocurrencies(): array
