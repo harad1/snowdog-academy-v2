@@ -25,9 +25,9 @@ RouteRepository::registerRoute('GET', '/register', Register::class, 'index');
 RouteRepository::registerRoute('POST', '/register', Register::class, 'register');
 RouteRepository::registerRoute('GET', '/cryptos', Cryptos::class, 'index');
 RouteRepository::registerRoute('GET', '/cryptos/buy/{id}', Cryptos::class, 'buy');
-RouteRepository::registerRoute('POST', '/cryptos/buy/{id}', Cryptos::class, 'buyPost');
+RouteRepository::registerRoute('POST', '/cryptos/buyPost/{id}', Cryptos::class, 'buyPost');
 RouteRepository::registerRoute('GET', '/cryptos/sell/{id}', Cryptos::class, 'sell');
-RouteRepository::registerRoute('POST', '/cryptos/sell/{id}', Cryptos::class, 'sellPost');
+RouteRepository::registerRoute('POST', '/cryptos/sellPost/{id}', Cryptos::class, 'sellPost');
 RouteRepository::registerRoute('GET', '/account', Account::class, 'index');
 RouteRepository::registerRoute('POST', '/account/addFunds', Account::class, 'addFunds');
 

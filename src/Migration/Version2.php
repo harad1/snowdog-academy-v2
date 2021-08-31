@@ -25,15 +25,16 @@ class Version2
     private function createCryptocurrenciesTable(): void
     {
         $createQuery = <<<SQL
-CREATE TABLE `cryptocurrencies` (
-  `id` varchar(255) NOT NULL,
-  `symbol` varchar(20) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `price` decimal(12,2) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `symbol` (`symbol`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-SQL;
+            CREATE TABLE `cryptocurrencies` (
+              `id` varchar(255) NOT NULL,
+              `symbol` varchar(20) NOT NULL,
+              `name` varchar(255) NOT NULL,
+              `price` decimal(12,2) NOT NULL,
+              `change` decimal(12,2) NOT NULL,
+              PRIMARY KEY (`id`),
+              UNIQUE KEY `symbol` (`symbol`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+    SQL;
         $this->database->exec($createQuery);
     }
 

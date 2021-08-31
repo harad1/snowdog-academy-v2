@@ -27,7 +27,7 @@ class Version3
 CREATE TABLE `user_cryptocurrencies` (
   `user_id` int(11) unsigned NOT NULL,
   `cryptocurrency_id` varchar(20) NOT NULL,
-  `amount` int(11) unsigned NOT NULL,
+  `amount` decimal(10,2) unsigned NOT NULL,
   PRIMARY KEY (`user_id`, `cryptocurrency_id`),
   CONSTRAINT user_cryptocurrencies_user_id_cryptocurrency_id_unique_index UNIQUE (`user_id`, `cryptocurrency_id`),
   CONSTRAINT user_cryptocurrencies_users_user_id_fk FOREIGN KEY (`user_id`) REFERENCES users (`id`),

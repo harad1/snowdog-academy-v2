@@ -13,14 +13,15 @@ class CryptocurrencyManager
         $this->database = $database;
     }
 
-    public function create(string $id, string $symbol, string $name, float $price): int
+    public function create(string $id, string $symbol, string $name, float $price, float $change): int
     {
-        $statement = $this->database->prepare('INSERT INTO cryptocurrencies (id, symbol, name, price) VALUES (:id, :symbol, :name, :price)');
+        $statement = $this->database->prepare('INSERT INTO cryptocurrencies (id, symbol, name, price, change) VALUES (:id, :symbol, :name, :price, :change)');
         $binds = [
             ':id' => $id,
             ':symbol' => $symbol,
             ':name' => $name,
-            ':price' => $price
+            ':price' => $price,
+            ':change' => $change
         ];
         $statement->execute($binds);
 
@@ -45,6 +46,28 @@ class CryptocurrencyManager
 
     public function updatePrice(string $id, float $price): void
     {
-        // TODO
+        $statement = $this->database->prepare('
+                                        UPDATE cryptocurrencies
+                                        SET price = :price
+                                        WHERE id = :id
+                                    ');
+        $binds = [
+            ':id' => $id,
+            ':price' => $price,
+        ];
+        $statement->execute($binds);
+    }
+
+    public function updatePercentageChange(string $id, float $change): void
+    {
+        $statement = $this->database->prepare('
+                                        UPDATE cryptocurrencies 
+                                        SET `change` = :change 
+                                        WHERE id = :id');
+        $binds = [
+            ':id' => $id,
+            ':change' => $change,
+        ];
+        $statement->execute($binds);
     }
 }
