@@ -44,4 +44,32 @@ class Account
     {
         return $this->user;
     }
+
+    public function addFunds(): void
+    {
+        $user = $this->userManager->getByLogin((string) $_SESSION['login']);
+
+        if (!$user) {
+            header('Location: /cryptos');
+            return;
+        }
+
+        require __DIR__ . '/../view/account/deposit.phtml';
+    }
+
+    public function addFundsPost(): void
+    {
+        $user = $this->userManager->getByLogin($_SESSION['login']);
+
+        if (!$user) {
+            header('Location: /account');
+            return;
+        }
+
+        $amount = $_POST['deposit-amount'];
+        $userId = $user->getId();
+        $this->userCryptocurrencyManager->addFunds($userId,  $amount);
+        header('Location: /account');
+        require __DIR__ . '/../view/account/deposit.phtml';
+    }
 }

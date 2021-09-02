@@ -91,6 +91,25 @@ li.active {
     top: 15px;
 }
 
+.starter-template {
+    padding: 40px 15px;
+    text-align: center;
+}
+.bg-info {
+    padding: 15px 15px 15px 15px;
+}
+
+.bg-success {
+    padding: 15px 15px 15px 15px;
+}
+
+.padded {
+    padding: 15px;
+}
+
+/*#######################################
+FOOTER
+#######################################*/
 footer {
     text-align: center;
     font-size: 12px;
@@ -106,43 +125,83 @@ footer p {
     line-height: 2.5;
 }
 
-.starter-template {
-    padding: 40px 15px;
-    text-align: center;
-}
-.bg-info {
-    padding: 15px;
-}
-
-.bg-success {
-    padding: 15px;
-}
-
-.padded {
-    padding: 15px;
-}
-
+/*#######################################
+ACCOUNT PAGE
+#######################################*/
 #input-login, #input-password {
     width: 75%;
 }
 
-btn {
-    color: blue;
+.form-control {
+    width: 80%;
 }
 
-@media only screen and (max-width: 1300px) {
+#your-funds {
+    margin-top: 50px;
+}
+
+#transactionCost {
+    font-size: 18px;
+}
+
+.actionOptionLink:hover {
+    text-decoration: none;
+    color: black;
+}
+
+/*#######################################
+CRYPTO PAGE
+#######################################*/
+#cryptos-list {
+    padding-top: 0px;
+}
+/*#######################################
+DEPOSIT PAGE
+#######################################*/
+#deposit-title {
+    margin: 20px 0px 15px 20px;
+    font-size: 20px;
+}
+
+#deposit-input {
+    min-width: 350px;
+}
+
+#deposit-button {
+    width: 100px;
+    margin: 5px 0px 20px 15px;
+}
+
+.deposit-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: start;
+    margin-top: 30px;
+}
+
+#deposit-info {
+    margin-left: 15px;
+}
+/*#######################################
+RESPONSIVE UI
+#######################################*/
+@media only screen and (max-width: 1400px) {
     nav {
-        height: 75px;
+        height: 70px;
         width: 95%;
         display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        align-items: center;
+        flex-wrap: nowrap;
     }
 
     #title, #logo .fa {
         font-size: 18px;
+    }
+
+    #logo {
+        margin-top: 15px;
+        margin-right: 0px;
+        align-self: start;
     }
 
     #slogan {
@@ -151,13 +210,25 @@ btn {
 
     .menu-item {
         margin: 0;
-        height: 100%;
         text-decoration: none;
         color: #222;
         display: block;
-        padding: 27.5px 5px 0px 5px;
+        padding: 5px 5px 0px 5px;
         color: white;
+        height: 10px;
         }
+
+    #menu li {
+        margin: 0;
+        height: 30px;
+        display: inline-block;
+    }
+
+    #menu {
+        display: block;
+        padding-left: 0px;
+        margin-top: 37.5px;
+    }
 
     .welcomeMsg {
         font-size: 25px;
@@ -169,13 +240,39 @@ btn {
         position: fixed;
         left: 50%;
         transform: translate(-50%, 0);
+        margin-top: 30px;
     }
 
     .actionOption {
         padding: 0px 5px 0px 5px;
     }
 
-    #actionOptionsDivider {
+    #your-funds {
+        width: 95%;
+        position: fixed;
+        left: 50%;
+        transform: translate(-50%, 0);
+        margin-left: 15px;
+        margin-bottom: 25px;
+        margin-top: 0px;
+        padding-top: 25px;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    nav {
+        height: 105px;
+    }
+
+    #menu {
+        padding-top: 17.5px;
+    }
+
+    #fa-logo {
         display: none;
+    }
+
+    #logo {
+        width: 50px;
     }
 }

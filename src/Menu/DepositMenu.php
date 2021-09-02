@@ -2,20 +2,23 @@
 
 namespace Snowdog\Academy\Menu;
 
-class AccountMenu extends AbstractMenu
+class DepositMenu extends AbstractMenu
 {
     public function getHref(): string
     {
-        return '/account';
+        return '/addFunds';
     }
 
     public function getLabel(): string
     {
-        return 'Account';
+        return 'Deposit';
     }
 
     public function isVisible(): bool
     {
-        return (isset($_SESSION['login']));
+        if(isset($_SESSION['login'])){
+            return true;
+        }
+        return false;
     }
 }

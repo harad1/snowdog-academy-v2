@@ -98,27 +98,27 @@ class UserCryptocurrencyManager
         return $result ?: null;
     }
 
-    public function subtractFundsFromUser(int $userId, float $cost): void
+    public function removeFunds(int $userId, float $amount): void
     {
         $query = $this->database->prepare(
-            'UPDATE users 
-            SET funds = funds - :cost 
+            'UPDATE users
+            SET funds = funds - :cost
             WHERE id = :user_id');
 
         $query->bindParam(':user_id', $userId, Database::PARAM_INT);
-        $query->bindParam(':cost', $cost);
+        $query->bindParam(':cost', $amount);
         $query->execute();
     }
 
-    public function addFundsFromUser(int $userId, float $cost): void
+    public function addFunds(int $userId, float $amount): void
     {
         $query = $this->database->prepare(
-            'UPDATE users 
-            SET funds = funds + :cost 
+            'UPDATE users
+            SET funds = funds + :cost
             WHERE id = :user_id');
 
         $query->bindParam(':user_id', $userId, Database::PARAM_INT);
-        $query->bindParam(':cost', $cost);
+        $query->bindParam(':cost', $amount);
         $query->execute();
     }
 }
