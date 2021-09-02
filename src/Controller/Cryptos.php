@@ -78,7 +78,7 @@ class Cryptos
             $_SESSION['flash'] = "Unfortunately, you do not have enough funds. This transaction requires $$totalCost and you have got $$userFunds. You require an extra $$missingAmount to complete this transaction.";
         } else {
             $this->userCryptocurrencyManager->addCryptocurrencyToUser($userId,  $id, (int)$amount);
-            $this->userCryptocurrencyManager->subtractFundsFromUser($userId,  $totalCost);
+            $this->userCryptocurrencyManager->removeFunds($userId,  $totalCost);
             $_SESSION['flash'] = "You have purchased $amount of $cryptocurrencyName ($cryptocurrencySymbol). Total cost: $$totalCost.";
         }
         header('Location: /cryptos');
@@ -135,7 +135,7 @@ class Cryptos
             $_SESSION['flash'] = "You do not have this much of $cryptocurrencyName ($cryptocurrencySymbol).";
         } else {
             $this->userCryptocurrencyManager->subtractCryptocurrencyFromUser($userId,  $id, (int)$amount);
-            $this->userCryptocurrencyManager->addFundsFromUser($userId,  $totalCost);
+            $this->userCryptocurrencyManager->addFunds($userId,  $totalCost);
             $this->userCryptocurrencyManager->removeEmptyCryptoBalance($userId);
             $_SESSION['flash'] = "You have sold $amount of $cryptocurrencyName ($cryptocurrencySymbol).";
         }

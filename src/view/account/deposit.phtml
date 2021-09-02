@@ -1,0 +1,51 @@
+<?php
+
+use Snowdog\Academy\Controller\Account;
+
+require_once(__DIR__ . '/../common/header.phtml'); ?>
+
+<div class="container">
+    <form class="form-horizontal" method="post" action="/addFundsPost">
+        <div class="deposit-container form-group">
+            <label id="deposit-title" for="input-login" class="control-label">Amount to deposit:</label>
+            <div id="deposit-input" class="col-sm-5">
+                <input onkeyup="emptyValueChecker(); depositConfirmation()" type="number" name="deposit-amount" class="form-control" placeholder="Amount in USD" >
+            </div>
+        </div>
+        <div class="form-group">
+            <div>
+                <button id="deposit-button" type="submit" class="btn btn-primary" disabled>Add Funds</button>
+                <p id="deposit-info"></p>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    function emptyValueChecker(){
+        let inputFieldValue = parseFloat(document.getElementsByTagName('input')[0].value);
+        let depositButton = document.getElementById("deposit-button");
+
+        if(!inputFieldValue) {
+            depositButton.disabled = true;
+        }
+        else {
+            depositButton.disabled = false;
+        }
+    }
+
+    function depositConfirmation(){
+        let depositInfo = document.getElementById("deposit-info");
+        let inputFieldValue = parseFloat(document.getElementsByTagName('input')[0].value);
+
+        if(inputFieldValue) {
+            depositInfo.innerText = `Amount to deposit: $${parseFloat(inputFieldValue)}`;
+            depositInfo.style.display = 'block'
+        }
+        else {
+            depositInfo.style.display = 'none'
+        }
+    }
+</script>
+<?php require_once(__DIR__ . '/../common/footer.phtml'); ?>
+
+

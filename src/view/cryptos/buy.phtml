@@ -1,15 +1,31 @@
 <?php require_once(__DIR__ . '/../common/header.phtml'); ?>
 
-    <div class="container">
-        <section id="buy-form" class="padded">
-            <h3>Buy <?= $this->cryptocurrency->getName() ?> (<?= $this->cryptocurrency->getSymbol()?>) — current price: $<?= $this->cryptocurrency->getPrice()?></h3>
-            <form method="post" action="/cryptos/buyPost/<?= $this->cryptocurrency->getId() ?>">
-                <div class="form-group">
-                    <input type="number" step="0.01" min="0.01" class="form-control" id="amount" placeholder="Amount in <?= $this->cryptocurrency->getSymbol()?>" name="amount" required>
-                </div>
-                <button type="submit" class="btn btn-success">Buy</button>
-            </form>
-        </section>
-    </div>
+<div class="container">
+    <section id="buy-form" class="padded">
+        <h3>Buy <?= $this->cryptocurrency->getName() ?> (<?= $this->cryptocurrency->getSymbol()?>) — current price: $<?= $cryptoPrice = $this->cryptocurrency->getPrice()?></h3>
+        <form onkeyup="positionSize(<?=$cryptoPrice?>)" method="post" action="/cryptos/buyPost/<?= $this->cryptocurrency->getId() ?>">
+            <div class="form-group">
+                <input type="number" step="0.01" min="0.01" class="form-control" id="amount" placeholder="Amount in <?= $this->cryptocurrency->getSymbol()?>" name="amount" required>
+            </div>
+            <button type="submit" class="btn btn-success">Buy</button>
+        </form>
+        <h3 id="transactionCost"></h3>
+
+    </section>
+</div>
+<script>
+    function positionSize(cryptoPrice){
+        let inputFieldValue = parseFloat(document.getElementsByTagName('input')[0].value);
+        let transactionCost = document.getElementById('transactionCost');
+
+        if(inputFieldValue){
+            transactionCost.style.display = 'block';
+            transactionCost.innerText = `Total cost: $${parseFloat(inputFieldValue * cryptoPrice).toFixed(2)}`;
+        }
+        else {
+            transactionCost.style.display = 'none';
+        }
+    }
+</script>
 
 <?php require_once(__DIR__ . '/../common/footer.phtml'); ?>
