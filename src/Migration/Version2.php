@@ -40,15 +40,15 @@ class Version2
 
     private function addCryptocurrencies(): void
     {
-        $this->cryptocurrencyManager->create('bitcoin', 'BTC', 'Bitcoin', 40000);
-        $this->cryptocurrencyManager->create('ethereum', 'ETH', 'Ethereum', 2500);
-        $this->cryptocurrencyManager->create('litecoin', 'LTC', 'Litecoin', 174);
-        $this->cryptocurrencyManager->create('bitcoin-cash', 'BCH', 'Bitcoin Cash', 624);
-        $this->cryptocurrencyManager->create('dash', 'DASH', 'Dash', 205);
-        $this->cryptocurrencyManager->create('ethereum-classic', 'ETC', 'Ethereum Classic', 58);
-        $this->cryptocurrencyManager->create('cardano', 'ADA', 'Cardano', 1.5);
-        $this->cryptocurrencyManager->create('stellar', 'XLM', 'Stellar', 0.3);
-        $this->cryptocurrencyManager->create('polkadot', 'DOT', 'Polkadot', 24);
-        $this->cryptocurrencyManager->create('tron', 'TRX', 'Tron', 0.07);
+        $this->cryptocurrencyManager->create('bitcoin', 'BTC', 'Bitcoin', 40000, 0.00);
+        $this->cryptocurrencyManager->create('ethereum', 'ETH', 'Ethereum', 2500, 0.00);
+        $this->cryptocurrencyManager->create('litecoin', 'LTC', 'Litecoin', 174, 0.00);
+        $this->cryptocurrencyManager->create('bitcoin-cash', 'BCH', 'Bitcoin Cash', 624, 0.00);
+        $this->cryptocurrencyManager->create('dash', 'DASH', 'Dash', 205, 0.00);
+        $this->cryptocurrencyManager->create('ethereum-classic', 'ETC', 'Ethereum Classic', 58, 0.00);
+        $this->cryptocurrencyManager->create('cardano', 'ADA', 'Cardano', 1.5, 0.00);
+        $this->cryptocurrencyManager->create('stellar', 'XLM', 'Stellar', 0.3, 0.00);
+        $this->cryptocurrencyManager->create('polkadot', 'DOT', 'Polkadot', 24, 0.00);
+        $this->cryptocurrencyManager->create('tron', 'TRX', 'Tron', 0.07, 0.00);
     }
 }
