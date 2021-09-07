@@ -1,16 +1,6 @@
 <?php use Snowdog\Academy\Model\Cryptocurrency;
 
-require_once(__DIR__ . '/../common/header.phtml'); 
-
-function marketDirectionChange($change) {
-    if ($change > 0) {
-        return "#008000";
-    } elseif ($change < 0) {
-        return "#FF0000";
-    } else {
-        return "#fffffff";
-    }
-}
+require_once(__DIR__ . '/../common/header.phtml');
 ?>
 
 <div class="container">
@@ -22,7 +12,7 @@ function marketDirectionChange($change) {
                 <th>Symbol</th>
                 <th>Name</th>
                 <th>Price</th>
-                <th>24h Change</th>
+<!--                <th>24h Change</th>-->
                 <th>Actions</th>
             </tr>
             </thead>
@@ -32,7 +22,6 @@ function marketDirectionChange($change) {
                     <td><?= $currency->getSymbol() ?></td>
                     <td><?= $currency->getName() ?></td>
                     <td>$<?= number_format($currency->getPrice(), 2) ?></td>
-                    <td style="color:<?= marketDirectionChange($currency->getChange()) ?>"><?= number_format($currency->getChange(), 2) ?>%</td>
 
                     <td>
                         <a class="actionOptionLink" href="/cryptos/buy/<?= $currency->getId() ?>">
