@@ -8,6 +8,7 @@ class Cryptocurrency
     private string $symbol;
     private string $name;
     private float $price;
+    private float $percent_change;
 
     public function getId(): string
     {
@@ -27,6 +28,11 @@ class Cryptocurrency
     public function getPrice(): float
     {
         return $this->price;
+    }
+
+    public function getChange(): float
+    {
+        return $this->percent_change;
     }
 
 }

@@ -1,6 +1,16 @@
 <?php use Snowdog\Academy\Model\Cryptocurrency;
 
-require_once(__DIR__ . '/../common/header.phtml');
+require_once(__DIR__ . '/../common/header.phtml'); 
+
+function marketDirectionChange($percent_change) {
+    if ($percent_change > 0) {
+        return "#008000";
+    } elseif ($percent_change < 0) {
+        return "#FF0000";
+    } else {
+        return "#fffffff";
+    }
+}
 ?>
 
 <div class="container">
@@ -22,13 +32,16 @@ require_once(__DIR__ . '/../common/header.phtml');
                     <td><?= $currency->getSymbol() ?></td>
                     <td><?= $currency->getName() ?></td>
                     <td>$<?= number_format($currency->getPrice(), 2) ?></td>
-
+                    <td style="color:<?= marketDirectionChange($currency->getChange()) ?>"><?= number_format($currency->getChange(), 2) ?>%</td>
                     <td>
                         <a class="actionOptionLink" href="/cryptos/buy/<?= $currency->getId() ?>">
                             <button class="actionOption">Buy</button>
                         </a>
                         <a class="actionOptionLink" href="/cryptos/sell/<?= $currency->getId() ?>">
                             <button class="actionOption">Sell</button>
+                        </a>
+                        <a class="actionOptionLink" href="https://coinstats.app/coins/<?= $currency->getId() ?>">
+                            <button id="chartButton" class="actionOption">Chart</button>
                         </a>
                     </td>
                 </tr>

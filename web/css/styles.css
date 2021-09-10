@@ -155,6 +155,10 @@ CRYPTO PAGE
 #cryptos-list {
     padding-top: 0px;
 }
+
+#chartButton {
+    margin-left: 10px;
+}
 /*#######################################
 DEPOSIT PAGE
 #######################################*/
@@ -256,6 +260,11 @@ RESPONSIVE UI
         margin-bottom: 25px;
         margin-top: 0px;
         padding-top: 25px;
+    }
+
+    #chartButton {
+        margin-left: 0px;
+        margin-top: 5px;
     }
 }
 
