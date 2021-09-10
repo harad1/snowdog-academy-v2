@@ -7,7 +7,7 @@ require_once(__DIR__ . '/../common/header.phtml'); ?>
         <h3>Sell <?= $this->cryptocurrency->getName() ?> (<?= $this->cryptocurrency->getSymbol()?>) — current price: $<?= $this->cryptocurrency->getPrice()?></h3>
         <form method="post" action="/cryptos/sellPost/<?= $this->cryptocurrency->getId() ?>">
             <div class="form-group">
-                <input type="text" class="form-control" id="amount" placeholder="Amount in <?= $this->cryptocurrency->getSymbol()?>" name="amount" required>
+                <input type="number" class="form-control" id="amount" min=0 placeholder="Amount in <?= $this->cryptocurrency->getSymbol()?>" name="amount" required>
             </div>
             <button type="submit" class="btn btn-success">Sell</button>
         </form>

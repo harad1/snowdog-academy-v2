@@ -5,7 +5,7 @@
         <h3>Buy <?= $this->cryptocurrency->getName() ?> (<?= $this->cryptocurrency->getSymbol()?>) — current price: $<?= $cryptoPrice = $this->cryptocurrency->getPrice()?></h3>
         <form onkeyup="positionSize(<?=$cryptoPrice?>)" method="post" action="/cryptos/buyPost/<?= $this->cryptocurrency->getId() ?>">
             <div class="form-group">
-                <input type="number" step="0.01" min="0.01" class="form-control" id="amount" placeholder="Amount in <?= $this->cryptocurrency->getSymbol()?>" name="amount" required>
+                <input type="number" min=0 step="0.01" min="0.01" class="form-control" id="amount" placeholder="Amount in <?= $this->cryptocurrency->getSymbol()?>" name="amount" required>
             </div>
             <button type="submit" class="btn btn-success">Buy</button>
         </form>

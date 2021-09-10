@@ -30,7 +30,7 @@ class Version2
               `symbol` varchar(20) NOT NULL,
               `name` varchar(255) NOT NULL,
               `price` decimal(12,2) NOT NULL,
-              `change` decimal(12,2) NOT NULL,
+              `percent_change` decimal(12,2) NOT NULL,
               PRIMARY KEY (`id`),
               UNIQUE KEY `symbol` (`symbol`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
