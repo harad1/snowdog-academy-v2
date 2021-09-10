@@ -43,4 +43,4 @@ CommandRepository::registerCommand('test_db_connection', TestDbConnection::class
 CommandRepository::registerCommand('migrate_db', Migrate::class, 'Performs database migration');
 CommandRepository::registerCommand('update_prices', UpdatePrices::class, 'Updates cryptocurrencies prices in database');
 
-Migrations::registerComponentMigration('Snowdog\\Academy', 3);
+Migrations::registerComponentMigration('Snowdog\\Academy', 4);

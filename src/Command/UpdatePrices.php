@@ -18,35 +18,32 @@ class UpdatePrices
 
     public function __invoke(OutputInterface $output)
     {
-        $apiURL = 'https://api.coincap.io/v2/assets';
-        $cURL = curl_init();
+    $curl = curl_init();
 
-        curl_setopt($cURL, CURLOPT_URL, $apiURL);
-        curl_setopt($cURL, CURLOPT_ENCODING, '');
-        curl_setopt($cURL, CURLOPT_HTTPGET, true);
-        curl_setopt($cURL, CURLOPT_FAILONERROR, true);
-        curl_setopt($cURL, CURLOPT_TIMEOUT, 10);
-        curl_setopt($cURL, CURLOPT_HTTPHEADER, array(
-            'Content-Type: application/json',
-            'Accept: application/json'
-        ));
+    curl_setopt_array($curl, array(
+      CURLOPT_URL => 'https://api.coinstats.app/public/v1/coins?skip=0&limit=100',
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_ENCODING => '',
+      CURLOPT_MAXREDIRS => 10,
+      CURLOPT_TIMEOUT => 0,
+      CURLOPT_FOLLOWLOCATION => true,
+      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+      CURLOPT_CUSTOMREQUEST => 'GET',
+    ));
 
-        try {
-            $result = curl_exec($cURL);
-            $responseRaw = json_decode($result);
+    $response = curl_exec($curl);
+    $responseRaw = json_decode($response, True);
 
-            foreach ($responseRaw->data as $cryptoData) {
-                $this->cryptocurrencyManager->updatePrice($cryptoData->id, round($cryptoData->priceUsd, 2));
-                $this->cryptocurrencyManager->updatePercentageChange($cryptoData->id, round($cryptoData->changePercent24Hr, 2));
-            }
-            $output->writeln("Success.");
+    for ($i=0; $i<count($responseRaw['coins']); $i++) {
+        $cryptoId = $responseRaw['coins'][$i]['id'];
+        $cryptoPrice = round($responseRaw['coins'][$i]['price'], 2);
+        $cryptoPriceChange = round($responseRaw['coins'][$i]['priceChange1d'], 2);
+        $this->cryptocurrencyManager->updatePrice($cryptoId, $cryptoPrice);
+        $this->cryptocurrencyManager->updatePercentChange($cryptoId, $cryptoPriceChange);
 
-        } catch (Exception $exception) {
-            $output->writeln("Error: $exception->getMessage()");
+    };
 
-        } finally {
-            curl_close($cURL);
-            $output->writeln('Closing a cURL session.');
-        }
+    curl_close($curl);
+
     }
 }

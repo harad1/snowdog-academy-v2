@@ -81,7 +81,7 @@ CREATE TABLE IF NOT EXISTS `components` (
     `component` VARCHAR(255) NOT NULL UNIQUE,
     `version` SMALLINT(6) NOT NULL,
     PRIMARY KEY (`component`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8; 
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 SQL;
         $this->database->exec($createQuery);
     }
